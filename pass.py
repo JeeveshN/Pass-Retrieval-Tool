@@ -34,7 +34,7 @@ def make_pass_dict():
                 try:
                     Name = re.findall(RE_OSX,pair)[0]
                     Pass = subprocess.check_output(PASS_OSX + Name,shell=True)
-                    print "Getting password for" + Name
+                    print "Getting password for " + Name
                     SAVED_PASSWORDS[Name] = Pass
                 except:
                     pass
