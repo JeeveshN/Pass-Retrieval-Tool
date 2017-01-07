@@ -4,8 +4,11 @@ import os
 import sys
 
 COMMAND_LINUX = "sudo grep -r '^psk=' /etc/NetworkManager/system-connections/"
+COMMAND_OSX = "defaults read /Library/Preferences/SystemConfiguration/com.apple.airport.preferences |grep SSIDString"
 COMMAND_WINDOWS_GENERIC = "netsh wlan show profile"
 RE_LINUX = '/etc/NetworkManager/system-connections/(.*)'
+RE_OSX = 'SSIDString = (.*);'
+PASS_OSX = 'security find-generic-password -wa '
 SAVED_PASSWORDS = dict()
 
 def get_pass_wind_indivisual(Name):
@@ -15,15 +18,27 @@ def get_pass_wind_indivisual(Name):
 
 def make_pass_dict():
     if os.name=='posix':
-        output = subprocess.check_output(COMMAND_LINUX,shell=True).split('\n')
-        for pair in output:
-            try:
-                pair = re.findall(RE_LINUX,pair)[0].split(':')
-                Name = pair[0]
-                Pass = pair[1].split('=')[1]
-                SAVED_PASSWORDS[Name]=Pass
-            except:
-                pass
+        try:
+            output = subprocess.check_output(COMMAND_LINUX,shell=True).split('\n')
+            for pair in output:
+                try:
+                    pair = re.findall(RE_LINUX,pair)[0].split(':')
+                    Name = pair[0]
+                    Pass = pair[1].split('=')[1]
+                    SAVED_PASSWORDS[Name]=Pass
+                except:
+                    pass
+        except:
+            output = subprocess.check_output(COMMAND_OSX,shell=True).split('\n')
+            for pair in output:
+                try:
+                    Name = re.findall(RE_OSX,pair)[0]
+                    Pass = subprocess.check_output(PASS_OSX + Name,shell=True)
+                    print "Getting password for " + Name
+                    SAVED_PASSWORDS[Name] = Pass
+                except:
+                    pass
+
     elif os.name =='nt':
         output = subprocess.check_output(COMMAND_WINDOWS_GENERIC,shell=True).split('\n')
         Names = list()
