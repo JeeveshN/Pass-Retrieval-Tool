@@ -62,7 +62,7 @@ def get_passwords(**kwargs):
                 Password = get_pass_wind_indivisual(kwargs['ssid'])
                 print 'Network:',kwargs['ssid'],'|''Password:',Password
             except:
-                print "Wrong Network Name"
+                print "No Such SSID exists"
         else:
             print 'Network:',kwargs['ssid'],'|''Password:',SAVED_PASSWORDS[kwargs['ssid']]
     else:
