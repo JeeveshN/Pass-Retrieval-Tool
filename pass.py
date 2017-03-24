@@ -11,7 +11,7 @@ RE_OSX = 'SSIDString = (.*);'
 PASS_OSX = 'security find-generic-password -wa '
 SAVED_PASSWORDS = dict()
 
-def get_pass_wind_indivisual(Name):
+def get_pass_wind_individual(Name):
     output = subprocess.check_output(COMMAND_WINDOWS_GENERIC+" name="+Name+" key=clear",shell=True)
     output = re.findall('Key Content(.*)\n',output)[0].strip().split(':')[1].strip()
     return output
@@ -50,7 +50,7 @@ def make_pass_dict():
                 pass
         for names in Names:
             try:
-                Password = get_pass_wind_indivisual(names)
+                Password = get_pass_wind_individual(names)
                 SAVED_PASSWORDS[names]=Password
             except:
                 pass
@@ -59,7 +59,7 @@ def get_passwords(**kwargs):
     if 'ssid' in kwargs:
         if os.name=='nt':
             try:
-                Password = get_pass_wind_indivisual(kwargs['ssid'])
+                Password = get_pass_wind_individual(kwargs['ssid'])
                 print 'Network:',kwargs['ssid'],'|''Password:',Password
             except:
                 print "No Such SSID exists"
