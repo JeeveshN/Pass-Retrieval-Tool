@@ -11,9 +11,10 @@ git clone https://github.com/JeeveshN/Retrieve-Wifi-Passwords.git or download th
 ```
 python pass.py
 ```
-![image](/extras/Capture.jpg?raw=true)
+![image](https://media.giphy.com/media/hoJvidbWg5vUs/giphy.gif)
 ### Retrieve Based on Wifi Name
 ```
 python pass.py "Name of Wifi"
 ```
-![image](/extras/Capture1.jpg?raw=true)
+![image](https://media.giphy.com/media/1xVcTBzWdBTDa/giphy.gif)
+
